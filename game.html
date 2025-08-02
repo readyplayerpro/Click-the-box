@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Click the Box Game</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f9f9f9;
+    }
+    #gameBox {
+      width: 100px;
+      height: 100px;
+      background-color: teal;
+      margin: 20px auto;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+    #adContainer {
+      display: none;
+      margin-top: 30px;
+      padding: 15px;
+      background: #fffbe6;
+      border: 2px dashed #999;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #adContainer h3 {
+      margin-top: 0;
+    }
+  </style>
+
+  <!-- ✅ Google AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7580106476259032"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <h1>Click the Box!</h1>
+  <p>Click the box 3 times correctly to win. If you miss 3 times, you see an ad.</p>
+
+  <div id="gameBox"></div>
+
+  <div id="adContainer">
+    <h3>📺 Sponsored Ad</h3>
+    <!-- ✅ AdSense Ad Unit -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-7580106476259032"
+         data-ad-slot="7368082104"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <script>
+    let correctClicks = 0;
+    let maxTries = 3;
+    let tries = 0;
+
+    const gameBox = document.getElementById("gameBox");
+    const adContainer = document.getElementById("adContainer");
+
+    gameBox.addEventListener("click", () => {
+      const isCorrect = Math.random() < 0.5;
+
+      if (isCorrect) {
+        correctClicks++;
+        gameBox.style.backgroundColor = "green";
+        setTimeout(() => gameBox.style.backgroundColor = "teal", 300);
+
+        if (correctClicks >= 3) {
+          alert("🎉 You win!");
+          resetGame();
+        }
+      } else {
+        tries++;
+        gameBox.style.backgroundColor = "red";
+        setTimeout(() => gameBox.style.backgroundColor = "teal", 300);
+
+        if (tries >= maxTries) {
+          showAd();
+        }
+      }
+    });
+
+    function showAd() {
+      adContainer.style.display = "block";
+      alert("You failed! Here's an ad.");
+      resetGame();
+    }
+
+    function resetGame() {
+      correctClicks = 0;
+      tries = 0;
+    }
+  </script>
+
+</body>
+</html>
